@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const bootcamps = require('./routes/bootcamps')
 // const logger = require('./middleware/logger')
+const errorHandler = require('./middleware/errorHandler')
 const morgan = require('morgan')
 const connectDB = require('./config/db.js')
 
@@ -22,6 +23,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/v1/bootcamps', bootcamps)
+app.use(errorHandler)
+// Middleware has to be in linear order
 
 const PORT = process.env.PORT || 5000
 
