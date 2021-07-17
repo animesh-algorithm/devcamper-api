@@ -1,6 +1,8 @@
 const express = require('express')
 const dotenv = require('dotenv')
+const fileupload = require('express-fileupload')
 const bootcamps = require('./routes/bootcamps')
+const courses = require('./routes/courses')
 // const logger = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const morgan = require('morgan')
@@ -22,7 +24,11 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
+// Express file upload
+app.use(fileupload())
+
 app.use('/api/v1/bootcamps', bootcamps)
+app.use('/api/v1/courses', courses)
 app.use(errorHandler)
 // Middleware has to be in linear order
 
