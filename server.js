@@ -1,9 +1,11 @@
 const express = require('express')
 const path = require('path')
 const dotenv = require('dotenv')
+const cookieParser = require('cookie-parser')
 const fileupload = require('express-fileupload')
 const bootcamps = require('./routes/bootcamps')
 const courses = require('./routes/courses')
+const auth = require('./routes/auth')
 // const logger = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const morgan = require('morgan')
@@ -21,6 +23,9 @@ const app = express()
 // Body Parser
 app.use(express.json())
 
+// Cookie Parser
+app.use(cookieParser())
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
@@ -33,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/v1/bootcamps', bootcamps)
 app.use('/api/v1/courses', courses)
+app.use('/api/v1/auth', auth)
 app.use(errorHandler)
 // Middleware has to be in linear order
 
